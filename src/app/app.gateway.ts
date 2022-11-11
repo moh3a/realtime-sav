@@ -17,9 +17,8 @@ export class AppGateway
   @WebSocketServer() wss: Server;
   private logger = new Logger("AppGateway");
 
-  afterInit(server: Server) {
+  afterInit() {
     this.logger.log("🥳 Socket initialized!");
-    this.logger.log(server.sockets);
   }
 
   handleConnection(client: Socket) {
@@ -31,7 +30,7 @@ export class AppGateway
   }
 
   @SubscribeMessage("action")
-  handleMessage(client: Socket, payload: Collection['name']): void {
+  handleMessage(client: Socket, payload: Collection["name"]): void {
     this.wss.emit("reaction", payload);
   }
 }
