@@ -8,7 +8,18 @@ import {
   WebSocketServer,
 } from "@nestjs/websockets";
 import { Socket, Server } from "socket.io";
-import { Collection } from "../types";
+
+type CollectionsNames =
+  | "clients"
+  | "entries"
+  | "deliveries"
+  | "products"
+  | "jobs"
+  | "prestations"
+  | "prestationDetails"
+  | "users"
+  | "transactions"
+  | "orders";
 
 @WebSocketGateway({ cors: { origin: "http://localhost:3000" } })
 export class AppGateway
@@ -30,7 +41,7 @@ export class AppGateway
   }
 
   @SubscribeMessage("action")
-  handleMessage(client: Socket, payload: Collection["name"]): void {
+  handleMessage(client: Socket, payload: CollectionsNames): void {
     this.wss.emit("reaction", payload);
   }
 }
