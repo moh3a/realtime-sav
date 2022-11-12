@@ -43,5 +43,6 @@ export class AppGateway
   @SubscribeMessage("action")
   handleMessage(client: Socket, payload: CollectionsNames): void {
     this.wss.emit("reaction", payload);
+    this.logger.log(`✍️ ${client.id} revalidated ${payload}`);
   }
 }
